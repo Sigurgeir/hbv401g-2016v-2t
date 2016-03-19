@@ -56,7 +56,6 @@ public class FlightBooking extends Booking {
 	// After: The new review text has been added to the list of reviews
 	void writeReview(String new_review) {
 		review.add(new_review);
-		// Still need to implement review submission. Not a high priority user story.
 	}
 
 	// Usage: getInfo()
