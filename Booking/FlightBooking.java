@@ -1,5 +1,4 @@
-//package metaSearchEngine
-import java.util.*;
+
 
 public class FlightBooking extends Booking {
 
@@ -13,6 +12,31 @@ public class FlightBooking extends Booking {
 	private String departureLoc;
 	private String arrivalLoc;
 	private String flightNr;
+
+	static void testInput(Flight_mockobject fightSearchResult) {
+	Flight_mockobject flight = fightSearchResult;
+	if(flight==null) throw new IllegalArgumentException("Error: Search result class contains no value. ");
+	String depTime = flight.get_depTime();
+	
+	if(depTime==null) throw new IllegalArgumentException("Error: Departure time is missing.");
+	else if(depTime.length()!=19) throw new IllegalArgumentException("Error: Departure time of wrong length");
+	// Note: It is still possible to set invalid departure time. 31st of febuary for example. Refine regexp
+	else if(!depTime.matches("^2[01][0-9][0-9]-(0[1-9]|1[0-2])-([0-2][0-9]|3[01]) ([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$")) throw new IllegalArgumentException("Error: Departure time on uncorrect format. ");
+
+
+	String depLoc = flight.get_depLoc();
+	if(depLoc==null) throw new IllegalArgumentException("Error: Departure location is missing.");
+	else if(depLoc.length()<3 || depLoc.length()>100) throw new IllegalArgumentException("Error: Departure location of wrong length");
+	else if(!depLoc.matches("^[A-Z].*") && !depLoc.matches("^[a-z].*")) throw new IllegalArgumentException("Error: Departure location does not start with a letter");
+
+	String arrivLoc = flight.get_arrivLoc();
+	if(arrivLoc==null) throw new IllegalArgumentException("Error: Arrival location is missing.");
+	else if(arrivLoc.length()<3 || arrivLoc.length()>100) throw new IllegalArgumentException("Error: Arrival location of wrong length");
+	else if(!arrivLoc.matches("^[A-Z].*") && !arrivLoc.matches("^[a-z].*")) throw new IllegalArgumentException("Error: Arrival location does not start with a letter");
+
+	int flightprice = flight.get_price();
+	if(flightprice < 0 || flightprice > 100000000) throw new IllegalArgumentException("Error: Unrealistic price setting");
+	}
 
 	// Constructor:
 	public FlightBooking(Flight_mockobject fightSearchResult, String seat, String buyer){
